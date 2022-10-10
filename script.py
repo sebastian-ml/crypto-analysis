@@ -71,19 +71,24 @@ def get_historical_data(coin_id, date_ranges):
     return coin_stats
 
 
-# The oldest date is the first day of analysis
-first_buy = altcoins_to_analyze['Date'].min()
-first_buy_unix = int(pd.Timestamp(first_buy).timestamp())
+def get_coin_data(start_date, end_date, coin_id):
+    days_needed = get_days_between_dates(start_date, end_date)
+    fetches_needed = get_num_of_fetches(days_needed, max_days_per_fetch)
+    date_ranges = get_date_ranges(fetches_needed, start_date, end_date)
 
-end_date = '2021-12-31'
-end_buy_unix = int(pd.Timestamp(end_date).timestamp())
+    return get_historical_data(coin_id, date_ranges)
+
+
+def pd_to_unix(date):
+    return int(pd.Timestamp(date).timestamp())
+
+
+# The oldest date is the first day of analysis
+first_buy_unix = pd_to_unix(altcoins_to_analyze['Date'].min())
+last_buy_unix = pd_to_unix('2021-12-31')
 
 # Get Bitcoin historical data.
 btc_id = 1
-
-days_needed = get_days_between_dates(first_buy_unix, end_buy_unix)
-fetches_needed = get_num_of_fetches(days_needed, max_days_per_fetch)
-date_ranges = get_date_ranges(fetches_needed, first_buy_unix, end_buy_unix)
-btc_data = get_historical_data(btc_id, date_ranges)
+btc_data = get_coin_data(first_buy_unix, last_buy_unix, btc_id)
 
 df = pd.DataFrame(btc_data)
