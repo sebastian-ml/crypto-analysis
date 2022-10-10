@@ -87,4 +87,3 @@ date_ranges = get_date_ranges(fetches_needed, first_buy_unix, end_buy_unix)
 btc_data = get_historical_data(btc_id, date_ranges)
 
 df = pd.DataFrame(btc_data)
-df.to_excel('test8.xlsx')
