@@ -24,8 +24,8 @@ def get_date_ranges(ranges, start_date, end_date):
     date_ranges = []
 
     for i in range(ranges):
-        current_start = start_date + (
-                i * days_to_add * seconds_in_day) + seconds_in_day
+        current_start = start_date + (i * days_to_add * seconds_in_day) + \
+                        (0 if i == 0 else seconds_in_day)
         current_end = start_date + ((i + 1) * days_to_add * seconds_in_day)
 
         if i == ranges - 1:
@@ -87,3 +87,4 @@ date_ranges = get_date_ranges(fetches_needed, first_buy_unix, end_buy_unix)
 btc_data = get_historical_data(btc_id, date_ranges)
 
 df = pd.DataFrame(btc_data)
+df.to_excel('test8.xlsx')
