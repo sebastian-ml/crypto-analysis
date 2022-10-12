@@ -3,6 +3,7 @@ import pandas as pd
 import requests
 import json
 import math
+import os
 
 seconds_in_day = 86400
 max_days_per_fetch = 100  # Coinmarketcap day limit per request
@@ -102,15 +103,19 @@ def get_crypto_history(coins_df, last_date):
 first_buy_unix = pd_to_unix(altcoins_to_analyze['Date'].min())
 last_buy_unix = pd_to_unix('2021-12-31')
 
-# Get Bitcoin historical data.
-btc_id = 1
-btc_data = get_coin_data(first_buy_unix, last_buy_unix, btc_id)
-df = pd.DataFrame(btc_data)
-df['ID'] = btc_id
+crypto_historical_data = os.path.isfile('./crypto_historical_data.xlsx')
 
-# Get altcoins historical data
-altcoins_data = get_crypto_history(altcoins_to_analyze, last_buy_unix)
-df = pd.concat([df, altcoins_data])
-df.reset_index(drop=True, inplace=True)
+# To avoid unnecessary fetching check if file with historical data already exists
+if not crypto_historical_data:
+    # Get Bitcoin historical data.
+    btc_id = 1
+    btc_data = get_coin_data(first_buy_unix, last_buy_unix, btc_id)
+    df = pd.DataFrame(btc_data)
+    df['ID'] = btc_id
 
-df.to_excel('crypto_historical_data.xlsx')
+    # Get altcoins historical data
+    altcoins_data = get_crypto_history(altcoins_to_analyze, last_buy_unix)
+    df = pd.concat([df, altcoins_data])
+    df.reset_index(drop=True, inplace=True)
+
+    df.to_excel('crypto_historical_data.xlsx')
