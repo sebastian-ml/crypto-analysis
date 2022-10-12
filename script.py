@@ -83,6 +83,21 @@ def pd_to_unix(date):
     return int(pd.Timestamp(date).timestamp())
 
 
+def get_crypto_history(coins_df, last_date):
+    df = pd.DataFrame(columns=['time', 'price', 'ID'])
+
+    for index, row in coins_df.iterrows():
+        coin_id = row['ID']
+        start_date = pd_to_unix(row['Date'])
+        coin_data = get_coin_data(start_date, last_date, coin_id)
+        coin_data_df = pd.DataFrame(coin_data)
+        coin_data_df['ID'] = coin_id
+
+        df = pd.concat([df, coin_data_df])
+
+    return df
+
+
 # The oldest date is the first day of analysis
 first_buy_unix = pd_to_unix(altcoins_to_analyze['Date'].min())
 last_buy_unix = pd_to_unix('2021-12-31')
@@ -90,5 +105,12 @@ last_buy_unix = pd_to_unix('2021-12-31')
 # Get Bitcoin historical data.
 btc_id = 1
 btc_data = get_coin_data(first_buy_unix, last_buy_unix, btc_id)
-
 df = pd.DataFrame(btc_data)
+df['ID'] = btc_id
+
+# Get altcoins historical data
+altcoins_data = get_crypto_history(altcoins_to_analyze, last_buy_unix)
+df = pd.concat([df, altcoins_data])
+df.reset_index(drop=True, inplace=True)
+
+df.to_excel('crypto_historical_data.xlsx')

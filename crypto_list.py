@@ -22,6 +22,3 @@ cmc_coins.rename(columns=str.capitalize, inplace=True)
 cmc_coins.rename(columns={'Id': 'ID'}, inplace=True)
 
 altcoins_to_analyze = pd.merge(altcoins, cmc_coins, on='ID')
-
-
-print(altcoins_to_analyze)
