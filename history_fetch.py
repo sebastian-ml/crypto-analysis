@@ -103,10 +103,10 @@ def get_crypto_history(coins_df, last_date):
 first_buy_unix = pd_to_unix(altcoins_to_analyze['Date'].min())
 last_buy_unix = pd_to_unix('2021-12-31')
 
-crypto_historical_data = os.path.isfile('./crypto_historical_data.xlsx')
+historical_data_path = os.path.isfile('./crypto_historical_data.xlsx')
 
 # To avoid unnecessary fetching check if file with historical data already exists
-if not crypto_historical_data:
+if not historical_data_path:
     # Get Bitcoin historical data.
     btc_id = 1
     btc_data = get_coin_data(first_buy_unix, last_buy_unix, btc_id)
@@ -122,3 +122,5 @@ if not crypto_historical_data:
     df['date'] = df['date'].apply(lambda x: x[:10])
 
     df.to_excel('crypto_historical_data.xlsx')
+
+crypto_history = pd.read_excel('crypto_historical_data.xlsx')
