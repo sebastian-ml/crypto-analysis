@@ -53,7 +53,7 @@ def parse_historical_data(coin_id, start_date, end_date):
 
 def parse_day_stats(coin_data):
     return {
-        'time': coin_data['timeClose'],
+        'date': coin_data['timeClose'],
         'price': round(coin_data['quote']['close'], 2)
     }
 
@@ -85,7 +85,7 @@ def pd_to_unix(date):
 
 
 def get_crypto_history(coins_df, last_date):
-    df = pd.DataFrame(columns=['time', 'price', 'ID'])
+    df = pd.DataFrame(columns=['date', 'price', 'ID'])
 
     for index, row in coins_df.iterrows():
         coin_id = row['ID']
@@ -117,5 +117,8 @@ if not crypto_historical_data:
     altcoins_data = get_crypto_history(altcoins_to_analyze, last_buy_unix)
     df = pd.concat([df, altcoins_data])
     df.reset_index(drop=True, inplace=True)
+
+    # Cleanse date
+    df['date'] = df['date'].apply(lambda x: x[:10])
 
     df.to_excel('crypto_historical_data.xlsx')
