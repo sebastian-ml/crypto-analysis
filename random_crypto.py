@@ -1,12 +1,10 @@
 import pandas as pd
 import requests
 import json
+import os
 from random import randint
 from crypto_list import altcoins_to_analyze
-
-random_coins_data = pd.DataFrame(
-    columns=['date', 'price', 'random_coin_id', 'coin_id']
-)
+from history_fetch import get_crypto_history, last_buy_unix
 
 # List of coins which mimic USD - will be excluded from analysis
 stablecoins = [
@@ -35,17 +33,45 @@ def parse_top_100(date):
     return top_100
 
 
-def get_random_coin(top_100, stablecoins_ids):
+def get_random_coin_id(top_100, coin_exceptions_ids):
     """Get random coin from top 100.
     If it's a stablecoin then get another coin."""
     random_coin_id = top_100.at[randint(0, 99), 'id']
 
-    if random_coin_id in stablecoins_ids:
-        get_random_coin(top_100, stablecoins_ids)
+    if random_coin_id in coin_exceptions_ids:
+        get_random_coin_id(top_100, coin_exceptions_ids)
 
     return random_coin_id
 
 
-top_100 = parse_top_100('2022-10-12')
 stablecoins_ids = list(map(lambda x: x['id'], stablecoins))
-random_coin = get_random_coin(top_100, stablecoins_ids)
+
+
+def assign_random_coins(coins_df):
+    random_coins = pd.DataFrame(columns=['ID', 'Date', 'ParentCoin'])
+
+    for index, row in coins_df.iterrows():
+        date = row['Date']
+        id = row['ID']
+        top_100 = parse_top_100(date)
+        random_coin_id = get_random_coin_id(top_100, stablecoins_ids)
+        random_coins = random_coins.append({'ID': random_coin_id,
+                                            'Date': date,
+                                            'ParentCoin': id},
+                                           ignore_index=True)
+
+    return random_coins
+
+
+random_coins = assign_random_coins(altcoins_to_analyze)
+historical_data_path = os.path.isfile('./random_crypto_historical_data.xlsx')
+
+if not historical_data_path:
+    random_coins_historical = get_crypto_history(random_coins,
+                                                 last_buy_unix)
+    random_coins_historical['date'] = random_coins_historical['date'].apply(
+        lambda x: x[:10])
+    random_coins_historical.reset_index(drop=True, inplace=True)
+    random_coins_historical.to_excel('random_crypto_historical_data.xlsx')
+
+random_crypto_history = pd.read_excel('random_crypto_historical_data.xlsx')
