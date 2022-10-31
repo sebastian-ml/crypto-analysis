@@ -1,6 +1,6 @@
 # Cryptocurrency analysis
 <p>
-    The project aims on assessing efficency of buying cryptocurrencies based on
+    The project aims on assessing efficiency of buying cryptocurrencies based on
     youtube videos shared by polish youtuber Phil Konieczny.
 </p>
 <p>
