@@ -64,15 +64,22 @@ def assign_random_coins(coins_df):
     return random_coins
 
 
-random_coins = assign_random_coins(altcoins_to_analyze)
-historical_data_path = os.path.isfile('./random_crypto_historical_data.xlsx')
+random_coins_file_name = 'random_coins.xlsx'
+historical_data_file_name = 'random_crypto_historical_data.xlsx'
 
-if not historical_data_path:
+random_coins_exist = os.path.isfile(f'./{random_coins_file_name}')
+historical_data_exist = os.path.isfile(f'./{historical_data_file_name}')
+
+if not historical_data_exist and not random_coins_exist:
+    random_coins = assign_random_coins(altcoins_to_analyze)
     random_coins_historical = get_crypto_history(random_coins,
                                                  last_buy_unix)
     random_coins_historical['date'] = random_coins_historical['date'].apply(
         lambda x: x[:10])
     random_coins_historical.reset_index(drop=True, inplace=True)
-    random_coins_historical.to_excel('random_crypto_historical_data.xlsx')
+
+    random_coins_historical.to_excel(historical_data_file_name)
+    random_coins.to_excel(random_coins_file_name)
 
 random_crypto_history = pd.read_excel('random_crypto_historical_data.xlsx')
+random_coins = pd.read_excel('random_coins.xlsx')
