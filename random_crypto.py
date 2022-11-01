@@ -35,26 +35,27 @@ def parse_top_100(date):
 
 def get_random_coin_id(top_100, coin_exceptions_ids):
     """Get random coin from top 100.
-    If it's a stablecoin then get another coin."""
+    Choose again if coin should not be picked. e.g. stablecoin."""
     random_coin_id = top_100.at[randint(0, 99), 'id']
 
-    if random_coin_id in coin_exceptions_ids:
-        get_random_coin_id(top_100, coin_exceptions_ids)
+    if random_coin_id not in coin_exceptions_ids:
+        return random_coin_id
 
-    return random_coin_id
-
-
-stablecoins_ids = list(map(lambda x: x['id'], stablecoins))
+    return get_random_coin_id(top_100, coin_exceptions_ids)
 
 
 def assign_random_coins(coins_df):
+    """Get random coin from top100 for each analyzed coin.
+    Ensure there are no duplicates and there are no stablecoins."""
     random_coins = pd.DataFrame(columns=['ID', 'Date', 'ParentCoin'])
+    exceptions = list(map(lambda x: x['id'], stablecoins))
 
     for index, row in coins_df.iterrows():
         date = row['Date']
         id = row['ID']
         top_100 = parse_top_100(date)
-        random_coin_id = get_random_coin_id(top_100, stablecoins_ids)
+        random_coin_id = get_random_coin_id(top_100, exceptions)
+        exceptions.append(random_coin_id)
         random_coins = random_coins.append({'ID': random_coin_id,
                                             'Date': date,
                                             'ParentCoin': id},
