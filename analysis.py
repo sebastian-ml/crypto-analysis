@@ -36,6 +36,7 @@ crypto_data = altcoins \
            left_on='cd_ID',
            right_on='cds_ID') \
     .merge(random_coins_description,
+           how='left',
            left_on='rc_ID',
            right_on='rcds_ID') \
     .merge(altcoins_bought,
