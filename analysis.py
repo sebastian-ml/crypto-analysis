@@ -56,4 +56,16 @@ crypto_data.rename(
              'rc_ID': 'random_coin_ID',
              'rcds_Name': 'random_coin_name',
              'rch_price': 'random_coin_price'},
-    inplace=True)
+    inplace=True
+)
+
+btc_data = btc_data \
+    .merge(coins_description,
+           left_on='ID',
+           right_on='cds_ID')
+
+btc_data = btc_data[['ID', 'cds_Name', 'date', 'price']]
+btc_data.rename(
+    columns={'cds_Name': 'coin_name'},
+    inplace=True
+)
