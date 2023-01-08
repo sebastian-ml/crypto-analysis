@@ -42,7 +42,6 @@ crypto_data = altcoins \
     .merge(altcoins_bought,
            left_on='cd_ID',
            right_on='ab_ID')
-
 crypto_data = crypto_data[
     ['cd_ID', 'cds_Name', 'cd_date', 'cd_price', 'rc_ID', 'rcds_Name',
      'rch_price', 'ab_Buy']
@@ -63,9 +62,19 @@ btc_data = btc_data \
     .merge(coins_description,
            left_on='ID',
            right_on='cds_ID')
-
 btc_data = btc_data[['ID', 'cds_Name', 'date', 'price']]
 btc_data.rename(
     columns={'cds_Name': 'coin_name'},
+    inplace=True
+)
+
+altcoins_bought = altcoins_bought \
+    .merge(coins_description,
+           left_on='ab_ID',
+           right_on='cds_ID')
+altcoins_bought = altcoins_bought[['ab_ID', 'cds_Name', 'ab_Buy', 'ab_Date']]
+altcoins_bought.rename(
+    columns={'ab_ID': 'ID', 'cds_Name': 'coin_name', 'ab_Buy': 'buy',
+             'ab_Date': 'date'},
     inplace=True
 )
