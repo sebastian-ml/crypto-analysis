@@ -69,6 +69,21 @@ btc_data.rename(
     inplace=True
 )
 
+# Get prices for all coins when buying and when selling
+prices_on_buy = crypto_data[
+    crypto_data.groupby('ID')['date'].transform('min') == crypto_data['date']]
+prices_on_sell = crypto_data[
+    crypto_data.groupby('ID')['date'].transform('max') == crypto_data['date']]
+
+# Set price 0 if coin is not available on certain date
+prices_on_sell['random_coin_price'] = prices_on_sell[
+    'random_coin_price'].fillna(0)
+prices_on_sell['price'] = prices_on_sell['price'].fillna(0)
+
+prices_on_buy = prices_on_buy.add_prefix('pob_')
+prices_on_sell = prices_on_sell.add_prefix('pos_')
+
+
 altcoins_bought = altcoins_bought \
     .merge(coins_description,
            left_on='ab_ID',
@@ -78,15 +93,28 @@ altcoins_bought = altcoins_bought \
            right_on='rc_ParentCoin') \
     .merge(random_coins_description,
            left_on='rc_ID',
-           right_on='rcds_ID')
+           right_on='rcds_ID') \
+    .merge(prices_on_sell,
+           left_on='ab_ID',
+           right_on='pos_ID') \
+    .merge(prices_on_buy,
+           left_on='ab_ID',
+           right_on='pob_ID')
 
 altcoins_bought = altcoins_bought[['ab_ID', 'cds_Name', 'ab_Buy', 'ab_Date',
-                                   'rc_ID', 'rcds_Name']]
+                                   'rc_ID', 'rcds_Name', 'pob_price',
+                                   'pob_random_coin_price',
+                                   'pos_price', 'pos_random_coin_price']]
 altcoins_bought.rename(
-    columns={'ab_ID': 'ID', 'cds_Name': 'coin_name', 'ab_Buy': 'buy',
-             'ab_Date': 'date', 'rc_ID': 'random_coin_ID',
-             'rcds_Name': 'random_coin_name'},
+    columns={'ab_ID': 'ID',
+             'cds_Name': 'coin_name',
+             'ab_Buy': 'buy',
+             'ab_Date': 'date',
+             'rc_ID': 'random_coin_ID',
+             'rcds_Name': 'random_coin_name',
+             'pob_price': 'price_buy',
+             'pob_random_coin_price': 'random_coin_price_buy',
+             'pos_price': 'price_sell',
+             'pos_random_coin_price': 'random_coin_price_sell'},
     inplace=True
 )
-
-print(altcoins_bought)
