@@ -54,7 +54,7 @@ def parse_historical_data(coin_id, start_date, end_date):
 def parse_day_stats(coin_data):
     return {
         'date': coin_data['timeClose'],
-        'price': round(coin_data['quote']['close'], 2)
+        'price': round(coin_data['quote']['close'], 10)
     }
 
 
