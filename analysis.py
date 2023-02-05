@@ -18,6 +18,11 @@ ax_1.bar(coins_by_buy_group.index,
 ax_1.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
 ax_1.set_title('Number of coins in each group')
 
+# Random coins
+altcoins_table_with_random = altcoins_bought[['coin_name', 'buy',
+                                              'date', 'random_coin_name']]
+print(altcoins_table_with_random)
+
 # Bitcoin
 buy_dates = altcoins_table[altcoins_table['buy'] > 0]
 buy_dates = buy_dates[['date']]

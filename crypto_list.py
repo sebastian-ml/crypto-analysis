@@ -11,7 +11,7 @@ import json
 altcoins = pd.read_excel('cryptocurrencies.xlsx')
 
 response_api = requests.get(
-    'https://web-api.coinmarketcap.com/v1/cryptocurrency/map')
+    'https://web-api.coinmarketcap.com/v1/cryptocurrency/map?listing_status=inactive,active,untracked')
 data = response_api.text
 parse_json = json.loads(data)
 
