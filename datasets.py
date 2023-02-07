@@ -13,6 +13,7 @@ Perform joins, delete unnecessary columns, rename columns.
 
 btc_data = crypto_history.loc[crypto_history['ID'] == 1]
 btc_data = btc_data[['ID', 'date', 'price']]
+btc_data['date'] = btc_data['date'].astype('datetime64[ns]')
 
 altcoins = crypto_history.loc[crypto_history['ID'] != 1]
 altcoins = altcoins[['ID', 'date', 'price']]
@@ -83,6 +84,7 @@ prices_on_sell['price'] = prices_on_sell['price'].fillna(0)
 prices_on_buy = prices_on_buy.add_prefix('pob_')
 prices_on_sell = prices_on_sell.add_prefix('pos_')
 
+btc_price = btc_data[['date', 'price']].add_prefix('bd_')
 
 altcoins_bought = altcoins_bought \
     .merge(coins_description,
@@ -99,12 +101,16 @@ altcoins_bought = altcoins_bought \
            right_on='pos_ID') \
     .merge(prices_on_buy,
            left_on='ab_ID',
-           right_on='pob_ID')
+           right_on='pob_ID') \
+    .merge(btc_price,
+           left_on='ab_Date',
+           right_on='bd_date')
 
 altcoins_bought = altcoins_bought[['ab_ID', 'cds_Name', 'ab_Buy', 'ab_Date',
                                    'rc_ID', 'rcds_Name', 'pob_price',
                                    'pob_random_coin_price',
-                                   'pos_price', 'pos_random_coin_price']]
+                                   'pos_price', 'pos_random_coin_price',
+                                   'bd_price']]
 altcoins_bought.rename(
     columns={'ab_ID': 'ID',
              'cds_Name': 'coin_name',
@@ -115,6 +121,7 @@ altcoins_bought.rename(
              'pob_price': 'price_buy',
              'pob_random_coin_price': 'random_coin_price_buy',
              'pos_price': 'price_sell',
-             'pos_random_coin_price': 'random_coin_price_sell'},
+             'pos_random_coin_price': 'random_coin_price_sell',
+             'bd_price': 'bitcoin_price_buy'},
     inplace=True
 )
