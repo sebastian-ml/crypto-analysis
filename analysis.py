@@ -20,7 +20,17 @@ ax_1.set_title('Number of coins in each group')
 # Random coins
 altcoins_table_with_random = altcoins_bought[['coin_name', 'buy',
                                               'date', 'random_coin_name']]
-print(altcoins_table_with_random)
+
+fig_tab_1, ax_tab_1 = plt.subplots(figsize=(4, 7))
+
+ccolors = plt.cm.Blues(np.full(len(altcoins_table_with_random.iloc[0]), 0.2))
+table = ax_tab_1.table(cellText=altcoins_table_with_random.to_numpy(),
+                       colLabels=altcoins_table_with_random.columns.values,
+                       colColours=ccolors,
+                       loc='center')
+ax_tab_1.axis('off')
+table.set_fontsize(15)
+# plt.savefig('altcoins_and_random_altcoins.png', dpi=1000)
 
 # Bitcoin
 buy_dates = altcoins_table[altcoins_table['buy'] > 0]
