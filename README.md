@@ -17,11 +17,12 @@ Remember that crypto market is very risky and volatile.
 
 ## Project overview 
 <p>
-The project aims on measuring profit made by cryptocurrencies which was reviewed
-by youtuber Phil Konieczny. 
+The project aims on measuring profit made by cryptocurrencies reviewed
+by crypto youtuber Phil Konieczny. 
 </p>
 <p>
-We assume that is more profitable to buy reviewed and recommended coins than buy random coins.
+The hypothesis is the following:
+It is more profitable to buy reviewed and recommended coins than buy random coins.
 </p>
 
 ## Data sources
@@ -48,8 +49,8 @@ Phil Konieczny reviews you can find on the youtube playlist <a href=
 ## Analysis
 <p>
 The first step is to pick a random altcoin for each reviewed altcoin. 
-The table below shows the information about altcoin, buy date (video release date)
-and information about buy status:
+The table below shows the information about altcoin, buy date (video release date),
+random coin and information about buy status:
 </p>
 <ul>
 <li>2 - invest</li>
@@ -114,12 +115,12 @@ average profit made by random and reviewed coins:
 <p>
 The average profit from reviewed coins is 992% compared to 584% profit from random coins
 which is 70% higher. This is the profit if we buy coins on dates where buy status is 
-unknown and invest.
+unknown or invest.
 </p>
 <p>
 The average profit is better if we buy only recommended coins (1391%). 
-It's 40% higher than average profit for coins with buy status invest and unknown.
-Random coins made on average 1012% profit which is again less than reviewed coins but 
+It's 40% higher than the average profit for coins with buy status invest and unknown.
+Random coins made on average 1012% profit which is again less than reviewed coins, but 
 1000 USD profit from 100 USD investment is very good result.
 </p>
 <p>
@@ -130,12 +131,12 @@ The last step is to check Bitcoin profit:
 
 <p>
 As we can see the average Bitcoin profit is less than reviewed coins profit.
-If Bitcoin were bought on dates with buy status invest and unknown, it made 
+If Bitcoin were bought on dates with buy status invest or unknown, it made 
 slightly better profit than random coins. However the difference is very small.
 </p>
 <p>
 If we buy coins only on invest dates, the highest profit is from reviewed altcoins, 
-then random altcoins and the lowest profit is made by Bitcoin 684%.
+then random altcoins and the lowest profit is made by Bitcoin (684%).
 It's 50% less than reviewed coins and 32% less than random altcoins.
 </p>
 
@@ -149,7 +150,7 @@ were relatively small.
 <p>
 There are many altcoins which will lead to loss so it's very risky to invest in them.
 On the other hand it's likely to generate higher profit from altcoins than from Bitcoin. 
-However, these days Bitcoin has a very strong position on the cryptocurrency market, it's the 
+However, these days Bitcoin has a very strong position on the cryptocurrency market - it's the 
 most popular cryptocurrency, it's less volatile and probably more safe 
 (in terms of investment) than other cryptocurrencies.
 </p>
@@ -163,4 +164,4 @@ about the market.
 
 ## Further steps
 It's worth to consider analysis with coins outside top 100 list. Those coins will 
-probably generate higher profit but they are more risky to invest.
+probably generate higher profit but the investment is more risky.
