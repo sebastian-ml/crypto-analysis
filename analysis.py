@@ -19,6 +19,7 @@ ax_1.bar_label(rects1, padding=3, size=12)
 # Altcoins and random altcoins
 altcoins_table_with_random = altcoins_bought[['coin_name', 'buy',
                                               'date', 'random_coin_name']]
+altcoins_table_with_random.sort_values('date', inplace=True)
 altcoins_table_with_random['date'] = altcoins_table_with_random['date'].dt.date
 
 fig_tab_1, ax_tab_1 = plt.subplots(figsize=(4, 7))
@@ -77,7 +78,7 @@ altcoins_bought['bitcoin_profit'] = invested_amount * \
 altcoins_1_2 = altcoins_bought[altcoins_bought['buy'] >= 1]
 
 # Coins
-altcoins_1_2 = altcoins_1_2.sort_values('profit')
+altcoins_1_2.sort_values('profit', inplace=True)
 fig_3, ax_3 = plt.subplots()
 rects2 = ax_3.barh(altcoins_1_2['coin_name'],
                    round(altcoins_1_2['profit'], 2))
@@ -86,7 +87,7 @@ ax_3.bar_label(rects2, padding=3)
 ax_3.margins(x=0.08)
 
 # Random coins
-altcoins_1_2 = altcoins_1_2.sort_values('random_coin_profit')
+altcoins_1_2.sort_values('random_coin_profit', inplace=True)
 fig_4, ax_4 = plt.subplots()
 rects3 = ax_4.barh(altcoins_1_2['random_coin_name'],
                    round(altcoins_1_2['random_coin_profit'], 2))
