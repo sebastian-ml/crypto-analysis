@@ -7,6 +7,17 @@ I'm just a person interested in this market but I'm not a professional.
 Remember that crypto market is very risky and volatile.
 </p>
 
+## Technology
+The project was made in Python. Below is the list of libraries:
+<ul>
+<li>pandas</li>
+<li>matplotlib</li>
+<li>numpy</li>
+<li>requests</li>
+<li>json</li>
+<li>math</li>
+</ul> 
+
 ## Table of contents
 1. Project overview
 2. Data sources
