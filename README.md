@@ -7,7 +7,28 @@ I'm just a person interested in this market but I'm not a professional.
 Remember that crypto market is very risky and volatile.
 </p>
 
-## Technology
+## Table of contents
+<ol>
+<li>Project overview</li>
+<li>Technology</li>
+<li>Data sources</li>
+<li>Assumptions</li>
+<li>Analysis</li>
+<li>Conclusion</li>
+<li>Further steps</li>
+</ol>
+
+## 1. Project overview 
+<p>
+The project aims on measuring profit made by cryptocurrencies reviewed
+by crypto youtuber Phil Konieczny. 
+</p>
+<p>
+The hypothesis is the following:
+It is more profitable to buy reviewed and recommended coins than buy random coins.
+</p>
+
+## 2. Technology
 The project was made in Python. Below is the list of libraries:
 <ul>
 <li>pandas</li>
@@ -18,25 +39,7 @@ The project was made in Python. Below is the list of libraries:
 <li>math</li>
 </ul> 
 
-## Table of contents
-1. Project overview
-2. Data sources
-3. Assumptions
-4. Analysis
-5. Conclusion
-6. Further steps
-
-## Project overview 
-<p>
-The project aims on measuring profit made by cryptocurrencies reviewed
-by crypto youtuber Phil Konieczny. 
-</p>
-<p>
-The hypothesis is the following:
-It is more profitable to buy reviewed and recommended coins than buy random coins.
-</p>
-
-## Data sources
+## 3. Data sources
 <p>
 Cryptocurrency prices are collected from <a href="https://coinmarketcap.com/">
 coinmarketcap.com
@@ -47,7 +50,7 @@ Phil Konieczny reviews you can find on the youtube playlist <a href=
 "https://www.youtube.com/playlist?list=PL03G2FwOuZrwCdUdhiYJvWAIkoSezpEQs">here</a>
 </p>
 
-## Assumptions
+## 4. Assumptions
 <ul>
 <li>Coins are bought exactly on each cryptocurrency review video release date</li>
 <li>Coins are bought for 100 USD</li>
@@ -57,7 +60,7 @@ Phil Konieczny reviews you can find on the youtube playlist <a href=
 <li>Each random coin can be picked only once</li>
 </ul>
 
-## Analysis
+## 5. Analysis
 <p>
 The first step is to pick a random altcoin for each reviewed altcoin. 
 The table below shows the information about altcoin, buy date (video release date),
@@ -151,7 +154,7 @@ then random altcoins and the lowest profit is made by Bitcoin (684%).
 It's 50% less than reviewed coins and 32% less than random altcoins.
 </p>
 
-## Conclusion
+## 6. Conclusion
 <p>
 The hypothesis that is better to buy reviewed and recommended coins is confirmed.
 However the analysis showed that buying coins randomly led to very good profit also.
@@ -173,6 +176,6 @@ any cryptocurrency it's important to make own research and learn as much as poss
 about the market.
 </p>
 
-## Further steps
+## 7. Further steps
 It's worth to consider analysis with coins outside top 100 list. Those coins will 
 probably generate higher profit but the investment is more risky.
